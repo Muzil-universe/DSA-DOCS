@@ -79,46 +79,27 @@ public:
     }
 
     // Insert a new node at a specific position
-    void insert_in_btw(int val, int pos) {
-        if (pos < 1) {
-            cout << "Invalid position" << endl;
-            return;
-        }
+ void insert_in_btw(int val, int pos) {
 
-        node* newnode = new node(val);
+    node* newnode = new node(val);
+    node* temp = head;
 
-        // Insert at the head
-        if (pos == 1) {
-            newnode->next = head;
-            head = newnode;
-            if (tail == nullptr) tail = newnode;
-            return;
-        }
+    // move to (pos-1)
+    for (int i = 1; i < pos - 1 && temp != nullptr; i++)
+        temp = temp->next;
 
-        node* temp = head;
-        int x = 1;
-
-        // Traverse to the node before the insertion point
-        while (temp != nullptr && x < pos - 1) {
-            temp = temp->next;
-            x++;
-        }
-
-        if (temp == nullptr) {
-            cout << "Position out of bounds" << endl;
-            delete newnode;
-            return;
-        }
-
-        // Insert the new node
-        newnode->next = temp->next;
-        temp->next = newnode;
-
-        // Update tail if inserted at the end
-        if (newnode->next == nullptr) {
-            tail = newnode;
-        }
+    if (temp == nullptr || temp->next == nullptr) {
+        cout << "Position is not in-between" << endl;
+        delete newnode;
+        return;
     }
+
+    // insert strictly in between
+    newnode->next = temp->next;
+    temp->next = newnode;
+}
+
+
 
     // Print all nodes in the list
     void print() {
